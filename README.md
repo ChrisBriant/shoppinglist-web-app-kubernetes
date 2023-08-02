@@ -4,6 +4,8 @@
 
 Just playing around with Kubernetes, spins up some containers, including Postgres so I can play around with the storage and accessing the DB using pgadmin and from other containers.
 
+I can't get the storage to write to the local machine when using Minikube. I want to try deploying this to a cluster created on vms using kubeadm and see if I can get it to work on that.
+
 
 ## Minikube commands
 minikube ssh
