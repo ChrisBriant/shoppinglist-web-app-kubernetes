@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shoppinglist
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shoppinglist
+  template:
+    metadata:
+      labels:
+        app: shoppinglist
+    spec:
+      containers:
+      - name: fastapi
+        image: thundercatsho/shoppinglist:latest
+        env:
+          - name: ENVIRONMENT
+            value: PROD
+          - name: PROD_HOST
+            value: postgres-service
+          - name: PROD_PORT
+            value: "5432"
+          - name: PROD_DATABASE
+            value: postgres
+          - name: PROD_USER
+            value: postgres
+          - name: PROD_PASSWORD
+            value: C0reTech!
+        ports:
+        - containerPort: 8000
+#ENVIRONMENT=PROD PROD_HOST PROD_PORT PROD_DATABASE PROD_USER PROD_PASSWORD

@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:latest
+          env:
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: C0reTech!
+          #Attempting to add this in an attempt to get the permissions to work
+          #HAS NO IMPACT
+          #securityContext:
+            #docker
+            #runAsUser: 1000
+            #root
+            #runAsUser: 0
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: postgres-storage
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: postgres-storage
+          hostPath:
+            #If this is set to a local path then it works
+            #path: /hosthome/chris/Documents/kubernetes/labs/shoppinglist-webapp-demo/storage
+            #This works as it is local to Minikube
+            path: /host/chris/Documents/kubernetes/labs/shoppinglist-webapp-demo/storage
+            #path: /data
+          #persistentVolumeClaim:
+           # claimName: postgres-pvc
